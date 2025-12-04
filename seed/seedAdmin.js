@@ -8,13 +8,13 @@ const seedAdmin = async () => {
     if (!adminExists) {
       const admin = await User.create({
         name: 'Shelter Admin',
-        email: 'admin@purrfect.com',
+        email: 'ilyas@gmail.com',
         password: 'admin123',
         role: 'admin'
       });
 
       console.log('✅ Admin account created');
-      console.log('   Email: admin@purrfect.com');
+      console.log('   Email: ilyas@gmail.com');
       console.log('   Password: admin123');
     } else {
       console.log('✅ Admin account already exists');

@@ -11,7 +11,7 @@ const products = [
   },
   {
     name: 'Gourmet Wet Cat Food Variety Pack',
-    description: '12 pack of gourmet wet cat food with various flavors including salmon, tuna, and chicken.',
+    description: '8 pack of gourmet wet cat food with various flavors including salmon, tuna, and chicken.',
     price: 24.99,
     category: 'food',
     image: 'catfood2.png',

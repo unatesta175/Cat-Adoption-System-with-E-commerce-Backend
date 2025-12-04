@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import connectDB from '../config/db.js';
 import seedAdmin from '../seed/seedAdmin.js';
+import seedUsers from '../seed/seedUsers.js';
 import seedCats from '../seed/seedCats.js';
 import seedProducts from '../seed/seedProducts.js';
 
@@ -16,6 +17,7 @@ const seedDatabase = async () => {
     
     // Seed data (seeders handle checking if data exists)
     await seedAdmin();
+    await seedUsers();
     await seedCats();
     await seedProducts();
     

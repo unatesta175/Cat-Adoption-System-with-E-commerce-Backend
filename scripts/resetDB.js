@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import connectDB from '../config/db.js';
 import seedAdmin from '../seed/seedAdmin.js';
+import seedUsers from '../seed/seedUsers.js';
 import seedCats from '../seed/seedCats.js';
 import seedProducts from '../seed/seedProducts.js';
 
@@ -25,6 +26,7 @@ const resetDatabase = async () => {
     // Seed fresh data
     console.log('🌱 Seeding fresh data...\n');
     await seedAdmin();
+    await seedUsers();
     await seedCats();
     await seedProducts();
     

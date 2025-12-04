@@ -14,6 +14,7 @@ import recommendationRoutes from './routes/recommendations.js';
 import productRoutes from './routes/products.js';
 import orderRoutes from './routes/orders.js';
 import seedAdmin from './seed/seedAdmin.js';
+import seedUsers from './seed/seedUsers.js';
 import seedCats from './seed/seedCats.js';
 import seedProducts from './seed/seedProducts.js';
 
@@ -67,6 +68,7 @@ app.listen(PORT, async () => {
   // Seed database
   console.log('🌱 Seeding database...');
   await seedAdmin();
+  await seedUsers();
   await seedCats();
   await seedProducts();
   console.log('\n✅ Server ready!\n');
