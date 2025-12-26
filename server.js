@@ -28,8 +28,20 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve uploaded images
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Serve uploaded images - must be before routes
+const uploadsPath = path.join(__dirname, 'uploads');
+console.log('📁 Uploads directory:', uploadsPath);
+
+app.use('/uploads', express.static(uploadsPath, {
+  setHeaders: (res, filePath) => {
+    // Set proper content-type headers
+    if (filePath.endsWith('.png')) {
+      res.setHeader('Content-Type', 'image/png');
+    } else if (filePath.endsWith('.jpg') || filePath.endsWith('.jpeg')) {
+      res.setHeader('Content-Type', 'image/jpeg');
+    }
+  }
+}));
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -50,7 +62,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message || 'Something went wrong!' });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 // Start server after database connection
 const startServer = async () => {
@@ -58,9 +70,9 @@ const startServer = async () => {
     // Connect to database first
     await connectDB();
     
-    // Start server
-    app.listen(PORT, async () => {
-      console.log(`\n🚀 Server running on port ${PORT}`);
+    // Start server - bind to 127.0.0.1 (IPv4) to ensure compatibility with proxy
+    app.listen(PORT, '127.0.0.1', async () => {
+      console.log(`\n🚀 Server running on http://localhost:${PORT}`);
       console.log(`📁 Environment: ${process.env.NODE_ENV || 'development'}\n`);
       
       // Seed database after connection is established
