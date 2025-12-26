@@ -23,8 +23,29 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
+// CORS configuration - allow requests from frontend
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  // Add your Vercel frontend URL here after deployment
+  process.env.FRONTEND_URL,
+].filter(Boolean); // Remove undefined values
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV === 'development') {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
+
 // Middleware
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -70,10 +91,12 @@ const startServer = async () => {
     // Connect to database first
     await connectDB();
     
-    // Start server - bind to 127.0.0.1 (IPv4) to ensure compatibility with proxy
-    app.listen(PORT, '127.0.0.1', async () => {
-      console.log(`\n🚀 Server running on http://localhost:${PORT}`);
-      console.log(`📁 Environment: ${process.env.NODE_ENV || 'development'}\n`);
+    // Start server - Render requires binding to 0.0.0.0 or no IP specified
+    const host = process.env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1';
+    app.listen(PORT, host, async () => {
+      console.log(`\n🚀 Server running on ${host}:${PORT}`);
+      console.log(`📁 Environment: ${process.env.NODE_ENV || 'development'}`);
+      console.log(`🌐 Accessible at: ${process.env.RENDER_EXTERNAL_URL || `http://localhost:${PORT}`}\n`);
       
       // Seed database after connection is established
       console.log('🌱 Seeding database...');

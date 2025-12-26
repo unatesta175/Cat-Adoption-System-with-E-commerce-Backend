@@ -4,7 +4,7 @@ const connectDB = async () => {
   try {
     if (!process.env.MONGODB_URI) {
       console.error('❌ MONGODB_URI is not defined in environment variables');
-      console.error('📍 Please set MONGODB_URI in Railway environment variables');
+      console.error('📍 Please set MONGODB_URI in your hosting platform (Render/Railway) environment variables');
       process.exit(1);
     }
 
@@ -31,10 +31,11 @@ const connectDB = async () => {
     const maskedUri = uri.replace(/\/\/([^:]+):([^@]+)@/, '//$1:***@');
     console.error(`📍 Connection URI: ${maskedUri}`);
     console.error('\n💡 Troubleshooting:');
-    console.error('   1. Check if MongoDB service is running in Railway');
-    console.error('   2. Verify MONGODB_URI is set correctly');
-    console.error('   3. For Railway MongoDB: Copy MONGO_URL from MongoDB service variables');
-    console.error('   4. For Atlas: Use mongodb+srv:// format with correct credentials');
+    console.error('   1. Check if MongoDB service is running (Atlas/Railway)');
+    console.error('   2. Verify MONGODB_URI is set correctly in environment variables');
+    console.error('   3. For MongoDB Atlas: Use mongodb+srv:// format with correct credentials');
+    console.error('   4. For Railway MongoDB: Copy MONGO_URL from MongoDB service variables');
+    console.error('   5. Ensure your IP is whitelisted in MongoDB Atlas (if using Atlas)');
     process.exit(1);
   }
 };

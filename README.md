@@ -10,6 +10,11 @@ Express.js REST API backend for the Purrfect Match cat adoption platform.
 - **MongoDB** (local or Atlas)
 - **npm** or **yarn**
 
+### Deployment
+
+- **[Deploy to Render](./RENDER_DEPLOYMENT.md)** - Complete Render deployment guide
+- **[Quick Start Guide](./DEPLOYMENT_QUICK_START.md)** - Fast deployment reference
+
 ### Installation
 
 ```bash
